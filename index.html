@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Daily Puzzles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F4EE;
+    --card: #FFFFFF;
+    --ink: #23281F;
+    --ink-soft: #6B7263;
+    --line: #E4E0D4;
+    --accent: #2F5D53;
+    --accent-soft: #E4EEEA;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    padding: 28px 18px 60px;
+  }
+  header {
+    max-width: 640px;
+    margin: 0 auto 22px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 30px;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+  header p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+  .grid {
+    max-width: 640px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 14px;
+    text-decoration: none;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 92px;
+    transition: transform 0.12s ease, border-color 0.12s ease;
+  }
+  .card:active { transform: scale(0.97); }
+  .card:hover { border-color: var(--accent); }
+  .card .name {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 1.2;
+  }
+  .card .domain {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+    word-break: break-all;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Daily Puzzles</h1>
+  <p>Your rotation, one tap away.</p>
+</header>
+
+<div class="grid" id="grid"></div>
+
+<script>
+  /* ============================================================
+     YOUR GAME LIST — edit this array to add, remove, or reorder.
+     Each line is one card: { name: "Display Name", url: "https://..." }
+     Add a new game by copying a line and changing the two values.
+     Delete a game by deleting its whole line.
+     Don't forget the comma between entries!
+     ============================================================ */
+  const games = [
+    { name: "Wordle",      url: "https://www.nytimes.com/games/wordle/index.html" },
+    { name: "Connections", url: "https://www.nytimes.com/games/connections" },
+    { name: "Globle",      url: "https://globle-game.com/" },
+    { name: "Travle",      url: "https://travle.earth/" },
+    { name: "Worldle",     url: "https://worldle.teuteuf.fr/" },
+    { name: "Nerdle",      url: "https://nerdlegame.com/" },
+    { name: "Flagle",      url: "https://www.flagle.io/" }
+  ];
+  /* ============================================================ */
+
+  function domainOf(url) {
+    try { return new URL(url).hostname.replace("www.", ""); }
+    catch { return url; }
+  }
+
+  const grid = document.getElementById("grid");
+  games.forEach(game => {
+    const card = document.createElement("a");
+    card.className = "card";
+    card.href = game.url;
+    card.target = "_blank";
+    card.rel = "noopener";
+    card.innerHTML = `
+      <span class="name">${game.name}</span>
+      <span class="domain">${domainOf(game.url)}</span>
+    `;
+    grid.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
